@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Indoor Test</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+	<script src="https://unpkg.com/aframe-render-order-component@1.1.0/dist/aframe-render-order-component.min.js"></script>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+
+
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" value="geomatics" tabindex="0" checked>
+        <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+
+	
+	<!--<input type="checkbox" name="" id="sideMenu-active" >
+
+		<div  id="map" class="sideMenu">
+			<iframe id="mapFrame" name="mapFrame"  src="https://d5e2-140-116-47-123.ngrok-free.app/rtls/app/zh-tw/map?enablePanel=false">
+			<script>
+			// Only for local development
+			headers['ngrok-skip-browser-warning'] = 'skip-browser-warning';
+			</script>
+			</iframe>
+			<label for="sideMenu-active" id="label" class="label">
+				<p class="fas">◀</p>
+			</label>
+			 label 寫在 nav 下方是為了比較好看到 
+			<div>
+				<button type="button" onclick="locateItemFunc()" id="locate">
+					<img id ="lb" src="https://dylan1211-hub.github.io/UWB-test/assets/position.png" border="0"/>
+				</button>
+			</div>
+		</div>
+		
+	
+	<script> //接室內地圖 
+		var mapWindow = document.getElementById('mapFrame').contentWindow;
+	  
+		let configureAuthToken = function () {
+			mapWindow.postMessage({type: 'request', cmd: 'configure', data: {key: "authentication", value: {apiKey: "prod0159f50204644026939caac9876724a3", appId: "ncku_geo"}}}, '*');
+		}
+		
+		function locateItemFunc() {
+			mapWindow.postMessage({type: 'request', cmd: 'locateItem', data: {itemUid: "F2E5", setCenter: true, setCurrent: false}}, '*');
+		}
+	  
+		function receivedMessageFromChannel(e) {
+			if (e.source === e.target) { 
+				console.warn("Message ignored (e.source == e.target):", e);
+				return;
+			} 	
+	  
+			const msg = e.data;
+			let srcWindow = e.source;
+			if (msg.type === 'info') {
+				
+			 switch (msg.cmd) {
+				case 'ready':
+				configureAuthToken();
+				break;
+				default:
+				break;
+				}
+			} 
+		}
+	  
+		window.addEventListener("message", receivedMessageFromChannel);
+	  
+	</script>-->
+
+	<a-scene
+	cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 1500;"
+    raycaster="objects: .user, .user2"
+    id = "scene"
+	vr-mode-ui="enabled: false"
+	embedded
+	arjs="sourceType: webcam; debugUIEnabled: false;"
+	>
+
+
+		<!--電腦教室桌子
+		<a-entity class="computer_room" gltf-model="https://dylan1211-hub.github.io/UWB-test/assets/computer_table.glb" scale="0.8 0.8 0.8" rotation="0 -45 0" animation-mixer></a-entity>
+		電腦教室電腦右
+		<a-entity class="computer_room" gltf-model="https://dylan1211-hub.github.io/UWB-test/assets/computer.glb" scale="0.8 0.8 0.8" rotation="0 -45 0" animation-mixer></a-entity>
+		電腦教室電腦中
+		<a-entity class="computer_room" gltf-model="https://dylan1211-hub.github.io/UWB-test/assets/computer.glb" scale="0.8 0.8 0.8" rotation="0 -45 0" animation-mixer></a-entity>
+		電腦教室電腦左
+		<a-entity class="computer_room" gltf-model="https://dylan1211-hub.github.io/UWB-test/assets/computer.glb" scale="0.8 0.8 0.8" rotation="0 -45 0" animation-mixer></a-entity>
+        -->
+
+        <!--電腦教室桌子1-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table2.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object"  material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子2-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table2.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object"  material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子3-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table2.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object" material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子4-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table2.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object"  material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子5-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table2.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object"  material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子6-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table2.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object" material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子A-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object"  material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子B-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object"  material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子C-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object" material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子D-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object" material="depthTest: true; transparent: true;"></a-entity>
+        <!--電腦教室桌子E-->
+        <a-entity class="computer_room" gltf-model="./computer_and_table.glb" scale="0.6 0.6 0.6" rotation="0 -90 0"  id="object" material="depthTest: true; transparent: true;"></a-entity>
+		<!--教室框架-->
+		<a-entity class="computer_room" gltf-model="./room_frame.glb" scale="0.55 0.55 0.55"  rotation="0 0 0"  id="object"></a-entity>
+		
+
+		<!--電腦教室地板-->
+		<a-entity class="computer_room" geometry="primitive: box; depth: 15.2 ;width: 15; height:0.01" scale="1 1 1" material="color:#7B7B7B ; transparent: true; opacity: 0" rotation="0 90 0"  id="object" ></a-entity>
+
+        <!--user-->
+		<a-text class="user" value="User 1" scale="1 1 1" align="center" color="white"></a-text>
+		<a-entity id="user" class="user" geometry="primitive: sphere; radius:0.3"  scale="0.6 0.6 0.6" material="color: green; depthTest: true; transparent: true; opacity: 1" name="User1" idn="F64071211" identity="undergrad" department="Geomatics" Grade="111"  ></a-entity>
+
+		<!--user2-->
+		<a-text class="user2" value="User 2" scale="1 1 1" align="center" color="white" ></a-text>
+		<a-entity id="user2" class="user2" geometry="primitive: sphere; radius:0.3" scale="0.6 0.6 0.6"  material="color: yellow; depthTest: true; transparent: true; opacity: 1" name="User2" idn="P66114030" identity="master" department="Geomatics" Grade="111"></a-entity>
+
+
+		<a-camera id =camera rotation-reader fov="80" ></a-camera>
+	</a-scene>
+	
+	<!--<script> //接PostGIS
+
+		async function data(){
+			var query = `SELECT * FROM postgres.rooms WHERE "roomnumber" = '55250' `; //query 內容
+			console.log(query);
+			query = {query}; //將query儲存為Json格式
+			//console.log(query); //確認query是否正確
+			const options = { //設定fetch的方法、標頭檔、內容格式
+				method:'POST', //以POST方法傳到後端
+				headers:{ 
+				'Content-Type' : 'application/json' //標頭檔，需與body格式對應
+				},
+				body : JSON.stringify(query) //內容格式設定為Json字串，內容為query
+            };
+			const response =await fetch('/database',options); //設定response變數為接收後端傳來的資料
+			const data = await response.json(); //將傳來的資料以Json格式儲存
+          	console.log(data); //確認傳來的資料
+          	var jArray = data['result']; //取得後端傳來資料之結果部分存入變數jArray中
+          	console.log(jArray); //確認jArray
+		}
+		//data();
+
+	</script>-->
+
+	<script type="module">
+		import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.3.0/latlon-ellipsoidal-vincenty.js'; //匯入橢球距離的計算工具程式
+        	//用法: const d = new LatLon(22.9987062, 120.2199947).distanceTo(new LatLon(23.9987062, 120.2199947));
+		
+		//---全域變數---
+		//API網址 (80 port: ngrok http 80)
+		function Run(){	const TrackAPI = "https://0a37-140-116-47-115.ngrok-free.app/TrackAPI.php";
+
+		const TrackAPI2 = "https://0a37-140-116-47-115.ngrok-free.app/TrackAPI4.php";
+		const TrackAPI3 = "https://0a37-140-116-47-115.ngrok-free.app/TrackAPI3.php";
+
+		var position;
+		
+		//AR內容位置
+        let yesorno = " ";
+		let targetEntrance = ''; //記錄導引目標空間入口座標(導引箭號用)
+		let objectPosition = [{"x":120.22017775544906,"y":22.99881089968086,"z":-0.34},  
+        {"x":120.220159376338,"y":22.9988092479078,"z":-0.34},
+        {"x":120.2201443552,"y":22.9988107563245,"z":-0.34},
+        {"x":120.220129585335,"y":22.9988120996344,"z":-0.34},
+        {"x":120.220116859924,"y":22.9988098801576,"z":-0.34},
+        {"x":120.220103464755,"y":22.9988138258942,"z":-0.34},
+        {"x":120.22017518427609,"y":22.998763884595004,"z":-0.34},
+        {"x":120.2201570714106,"y":22.998769212475143,"z":-0.34},
+        {"x":120.22013645177643,"y":22.998770394240182,"z":-0.34},
+        {"x":120.22012057561803,"y":22.998768387948267,"z":-0.34},
+        {"x":120.22010603288453,"y":22.998767191951092,"z":-0.34},
+		{"x":120.220142014,"y":22.9987783996,"z":1.295},  
+		{"x":120.220132953,"y":22.9987805926,"z":-1.5}];
+
+
+		/*{"x":120.2201440,"y":22.9987904,"z":26.234},
+		{"x":120.2201367,"y":22.9987777,"z":26.994},
+		{"x":120.2201437,"y":22.9987877,"z":26.994}, //(1.5-0.9)*0.6=0.54
+		{"x":120.2201507,"y":22.9987977,"z":26.994} //(1.825-1.5)*0.6=0.195
+        */
+		
+	    //---主要功能: 取得姿態、位置等參數控制AR內容渲染狀況---
+		//watch position for indoor (每一秒呼叫一次後端API，從GIPS server獲取最新一筆定位軌跡，存入物件position)
+		jQuery(document).ready(function(){
+			//ResetColor('1', 'white'); ResetColor('2', 'yellow'); ResetColor('3', 'red');
+			//SetColor(1);SetColor(2);
+			window.addEventListener('deviceorientation', function(event) { //get azimuth
+				//處理方位角
+				let head = event.webkitCompassHeading; //獲取羅盤資料(iOS限定) //手機-z軸向(朝前)相對於N軸向之順時針角度
+				if (head == undefined){ head = 0; } //無羅盤資料則預設朝向正北
+				let theta = -(head-180-90); //N軸轉向手機x軸向(朝右)的逆時針角度
+				let theta_rad = theta * Math.PI /180; //換成弧度
+				
+				//處理位置之計算
+				//let height = 31.634; //假設固定於2樓移動
+				//let userHeight = height + 1.3;
+
+				$.getJSON( TrackAPI, function (data){
+					let userHeight = 0;
+					//let point = {x: data.x, y: data.y}; //用戶即時平面位置座標(判斷within使用)
+				    position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+					//SetLocation("text", theta_rad, position, objectPosition, "computer_room");
+					SetLocation("entity", theta_rad, position, objectPosition, "computer_room");  
+                    //SetOpacityValue("entity",yesorno);
+                    //console.log(position);
+				});
+
+				$.getJSON( TrackAPI2, function (data){
+					let usertrack = [{"x": data.x,"y": data.y, "z": 1.4}];
+					console.log(position);
+					SetUser("entity", theta_rad, position, usertrack, "user");
+					SetUser("text", theta_rad, position, usertrack, "user");
+				});
+
+				$.getJSON( TrackAPI3, function (data){
+					let usertrack2 = [{"x": data.x,"y": data.y, "z": 1.4}];
+					console.log(position);
+					SetUser("entity", theta_rad, position, usertrack2, "user2");
+					SetUser("text", theta_rad, position, usertrack2, "user2");
+				});
+
+				setInterval(function() { //定時讀取軌跡中下一筆資料，並且重設模型位置
+					$.getJSON( TrackAPI, function(data){
+						let userHeight = 0;
+						//let point = {x: data.x, y: data.y}; //用戶即時平面位置座標(判斷within使用)
+					    position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+						//SetLocation("text", theta_rad, position, objectPosition, "computer_room");
+						SetLocation("entity", theta_rad, position, objectPosition, "computer_room"); 
+                        //SetOpacityValue("entity",yesorno);
+                        //console.log(position);
+					});
+					$.getJSON( TrackAPI2, function (data){
+						let usertrack = [{"x": data.x,"y": data.y, "z": 1.4}];
+						console.log(position);
+						SetUser("entity", theta_rad, position, usertrack, "user");
+						SetUser("text", theta_rad, position, usertrack, "user");
+					});
+					$.getJSON( TrackAPI3, function (data){
+						let usertrack2 = [{"x": data.x,"y": data.y, "z": 1.4}];
+						console.log(position);
+						SetUser("entity", theta_rad, position, usertrack2, "user2");
+						SetUser("text", theta_rad, position, usertrack2, "user2");
+					});
+				}, 1000);
+
+			}, {once: true}); //取得網頁就緒當下之方位角，且不隨每次的位置更新重複執行
+		});
+        GetSwitch();
+				
+		//設定各模型相對於所在即時位置的高及位置
+		function SetLocation(type, degree, position, ancpos, classtype){ //type: 實體類型, degree: 啟動時裝置方位角, position: 用戶位置座標, ancpos: AR內容座標
+			let target = document.querySelectorAll('a-'+type+'.'+classtype);
+			if (target.length!=0 && ancpos.length!=0){
+				for(let j=0; j<ancpos.length; j++){ 
+					let H = ancpos[j].z - position.coords.altitude;
+					let user = new LatLon(position.coords.latitude, position.coords.longitude);
+					let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+					let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+					if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+					if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+					//if (type=="text"){
+					//	target[j].setAttribute("look-at", {x: 0, y: 0, z: 0});
+					//	H = ancpos[j].z + 0.5 - position.coords.altitude;
+					//}
+					let z = Math.cos(degree)*E + Math.sin(degree)*N;
+					let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)  
+
+					z=1.5*z;
+					x=1.5*x;
+					
+
+					let target_att = document.createAttribute('position');
+					target_att.value = x+" "+H+" "+z;
+					target[j].setAttributeNode(target_att);
+                    
+				}
+
+			}
+		};
+
+		function SetUser(type, degree, position, ancpos, classtype){
+			let target = document.querySelectorAll('a-'+type+'.'+classtype);
+			if (target.length!=0 && ancpos.length!=0){
+				for(let j=0; j<ancpos.length; j++){ 
+					let H = ancpos[j].z - position.coords.altitude;
+					let user = new LatLon(position.coords.latitude, position.coords.longitude);
+					let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+					let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+					if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+					if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+					if (type=="text"){
+						target[j].setAttribute("look-at", {x: 0, y: 0, z: 0});
+						H = ancpos[j].z + 0.5 - position.coords.altitude;
+					}
+					let z = Math.cos(degree)*E + Math.sin(degree)*N;
+					let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)
+
+					
+
+					let target_att = document.createAttribute('position');
+					target_att.value = x+" "+H+" "+z;
+					target[j].setAttributeNode(target_att);
+                    //console.log(target_att.value);
+
+				}
+			}
+			
+		};
+    	};
+   		Run();
+		ClickAttribute();
+		ClickAttribute2();
+
+        
+		function ClickAttribute(){
+			var clicked=false;
+			console.log("有執行ClickAttribute()");
+			let scene = document.getElementById('scene');
+			let clickobject = document.querySelectorAll('a-entity.user');
+
+			for (let i =0 ; i<1; i++){
+
+				const clickListener = function (ev){
+					if(!clicked){
+						clicked=true;
+						ev.stopPropagation();
+						ev.preventDefault();
+
+						const name =ev.target.getAttribute('name');
+						const id =ev.target.getAttribute('idn');
+						const identity =ev.target.getAttribute('identity');
+						const department =ev.target.getAttribute('department');
+						const grade =ev.target.getAttribute('grade');
+
+						const el = ev.detail.intersection && ev.detail.intersection.object.el;
+						if (el && el === ev.target) {
+							
+							let color = clickobject[i].getAttribute('material').color;
+							clickobject[i].setAttribute('material','color: cyan');
+							const label = document.createElement('span');
+							const container = document.createElement('div');
+							container.setAttribute('id', 'place-label');
+							label.innerHTML = "User : " + name + "<br/>" + "ID Number : " + id + "<br/>" + "Identity : " + identity +  "<br/>" + "Department : " + department 
+							+ "<br/>" + "Grade : " + grade;
+							container.appendChild(label);
+							document.body.appendChild(container);
+							
+							setTimeout(() => {
+								container.parentElement.removeChild(container);
+								
+								console.log(color);
+								clickobject[i].setAttribute('material','color:'+color);
+								clicked=false;
+							}, 3000);
+						}
+					}
+					
+				};
+
+				clickobject[i].addEventListener('click',clickListener);
+			}
+		}
+
+		function ClickAttribute2(){
+			var clicked=false;
+			console.log("有執行ClickAttribute()");
+			let scene = document.getElementById('scene');
+			let clickobject = document.querySelectorAll('a-entity.user2');
+
+			for (let i =0 ; i<1; i++){
+
+				const clickListener = function (ev){
+					if(!clicked){
+						clicked=true;
+						ev.stopPropagation();
+						ev.preventDefault();
+
+						const name =ev.target.getAttribute('name');
+						const id =ev.target.getAttribute('idn');
+						const identity =ev.target.getAttribute('identity');
+						const department =ev.target.getAttribute('department');
+						const grade =ev.target.getAttribute('grade');
+
+						const el = ev.detail.intersection && ev.detail.intersection.object.el;
+						if (el && el === ev.target) {
+							
+							let color = clickobject[i].getAttribute('material').color;
+							clickobject[i].setAttribute('material','color: cyan');
+							const label = document.createElement('span');
+							const container = document.createElement('div');
+							container.setAttribute('id', 'place-label');
+							label.innerHTML = "User : " + name + "<br/>" + "ID Number : " + id + "<br/>" + "Identity : " + identity +  "<br/>" + "Department : " + department 
+							+ "<br/>" + "Grade : " + grade;
+							container.appendChild(label);
+							document.body.appendChild(container);
+							
+							setTimeout(() => {
+								container.parentElement.removeChild(container);
+								
+								console.log(color);
+								clickobject[i].setAttribute('material','color:'+color);
+								clicked=false;
+							}, 3000);
+						}
+					}
+					
+				};
+
+				clickobject[i].addEventListener('click',clickListener);
+			}
+		}
+
+		function GetSwitch(){
+            let checkbox = document.querySelector("#myonoffswitch");
+            checkbox.addEventListener('change',function(){
+                let scene = document.getElementById('scene');
+                if(this.checked){
+                    
+                    for(let r=0;r<6;r++){
+                        let right = document.createElement('a-entity');
+                        right.setAttribute('class','computer_room');
+                        right.setAttribute('gltf-model','https://dylan1211-hub.github.io/UWB-test/assets/computer_and_table_2.glb');
+                        right.setAttribute('scale','0.9 0.9 0.9');
+						right.setAttribute('rotation','0 -45 0');
+                        right.setAttribute('animation-mixer');
+                        right.setAttribute('id','object');
+                        scene.appendChild(right);
+                    };
+                    for(let l=0;l<5;l++){
+                        let left = document.createElement('a-entity');
+                        left.setAttribute('class','computer_room');
+                        left.setAttribute('gltf-model','https://dylan1211-hub.github.io/UWB-test/assets/computer_and_table.glb');
+                        left.setAttribute('scale','0.9 0.9 0.9');
+						left.setAttribute('rotation','0 -45 0');
+                        left.setAttribute('animation-mixer');
+                        left.setAttribute('id','object');
+                        scene.appendChild(left);
+                    };
+
+                    let floor = document.createElement('a-entity');
+                    floor.setAttribute('class','computer_room');
+                    floor.setAttribute('material','color: #7B7B7B; transparent: true; opacity: 0');
+               		floor.setAttribute('geometry','primitive: box; depth: 15.2 ;width: 8.6; height:0.01');
+					floor.setAttribute('rotation','0 -45 0');
+                    floor.setAttribute('animation-mixer');
+                    floor.setAttribute('id','object');
+					scene.appendChild(floor);
+
+					/*let floor2 = document.createElement('a-entity');
+                    floor2.setAttribute('class','computer_room');
+                    floor2.setAttribute('material','color: #804040; transparent: true; opacity: 0.8');
+               		floor2.setAttribute('geometry','primitive: box; depth: 3 ;width: 6.4; height:0.01');
+					floor2.setAttribute('rotation','0 -45 0');
+                    floor2.setAttribute('animation-mixer');
+                    floor2.setAttribute('id','object');
+					scene.appendChild(floor2);*/
+
+                    let dynamic = document.createElement('a-entity');
+                    dynamic.setAttribute('class','user');
+                    dynamic.setAttribute('material','color: yellow; transparent: true; opacity: 1');
+                    dynamic.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    dynamic.setAttribute('animation-mixer');
+                    dynamic.setAttribute('id','user');
+                    scene.appendChild(dynamic);
+                    Run();
+
+                    
+                }else{
+                    console.log("not display");
+					scene.removeChild(document.getElementById('user'));	
+                    for(let i=0;i<13;i++){
+                    scene.removeChild(document.getElementById('object'));
+                    }
+					
+					
+                    
+                    
+            }})
+        }
+
+
+	</script>
+</body>
+</html>
+

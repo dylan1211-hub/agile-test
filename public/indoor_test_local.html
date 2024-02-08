@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no," />
+    <title>Indoor Accuracy Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+
+</head>
+
+<body style="margin: 0px; overflow: hidden; ">
+    <a-scene cursor="rayOrigin: mouse; fuse: true: fuseTimeout: 0;" raycaster="objects: .object;" id="scene"
+            vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false;" >  
+
+        <a-camera id=camera rotation-reader fov="80" position="0 1.36 0" ></a-camera>
+        <!--老師的門
+        <a-entity geometry="primitive: box; depth: 0.05 ;width: 0.8; height:2.14" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0 -0.23 -3" ></a-entity>-->
+
+        <!--家裡的鏡子
+        <a-entity geometry="primitive: box; depth: 0.001 ;width: 0.4; height:0.9" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0 -0.39 -3" ></a-entity>-->
+
+        <!--家裡的冷氣遙控器
+        <a-entity geometry="primitive: box; depth: 0.01 ;width: 0.06; height:0.14" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0 0 -3" ></a-entity>-->
+
+         <!--<a-entity geometry="primitive: sphere; radius: 0.1" material="color: yellow; depthTest: true; transparent: true; opacity: 1"  class="object" scale="1 1 1" position ="-0.4 0.74 -3"></a-entity>-->
+
+         
+         <a-entity geometry="primitive: box; depth: 0 ;width: 0.297; height:0.210" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0 1.36 -2" ></a-entity>
+         <a-entity geometry="primitive: box; depth: 0 ;width: 0.297; height:0.210" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0.50 1.36 -2" ></a-entity>
+         <a-entity geometry="primitive: box; depth: 0 ;width: 0.297; height:0.210" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0 1.86 -2" ></a-entity>
+         <a-entity geometry="primitive: box; depth: 0 ;width: 0.297; height:0.210" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="-0.50 1.36 -2" ></a-entity>
+         <a-entity geometry="primitive: box; depth: 0 ;width: 0.297; height:0.210" material="color: cyan; opacity: 0.8; transparent: true;" scale="1 1 1" position ="0 0.86 -2" ></a-entity>
+         <!--<a-entity geometry="primitive: box; depth: 0 ;width: 0.297; height:0.210" material="color: cyan; opacity: 0.8; transparent: true;" scale="0.6 0.6 0.6" position ="0.9 1.36 -2" ></a-entity>-->
+  
+         <!--3樓走廊鏡子
+         <a-entity geometry="primitive: box; depth: 0.05 ;width: 0.5; height:1.25" material="color: cyan; opacity: 0.8; transparent: true;" scale="0.6 0.6 0.6" position ="0 1.392 -10 " ></a-entity> -->
+
+         <!--3樓研討室的牆
+         <a-entity geometry="primitive: box; depth: 0.05 ;width: 8.6; height:3.5" material="color: cyan; opacity: 0.8; transparent: true;" scale="0.6 0.6 0.6" position ="0 1.75 -1 " ></a-entity> -->
+
+    </a-scene>
+
+</body>
+</html>

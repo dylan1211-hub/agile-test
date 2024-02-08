@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Raycaster Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script type='text/javascript'
+        src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+
+    <span id = "hint" style="width:250px ; height:40px ; position:fixed; left: 1px; bottom: 14px;display: block;
+		background-color: rgba(8, 8, 8, 0.452);color: #ffffff; border-radius: 10px; font-size: 25px;text-align: center; z-index: 9999;" ></span>
+    <a-scene cursor="rayOrigin: mouse; fuse: true: fuseTimeout: 0;" raycaster="objects: .object;" id="scene"
+        vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false;">  
+
+    <a-entity geometry="primitive: box; depth: 0.05 ;width: 14.2; height:3.5" material="color: white; opacity: 0.2; transparent: true;" class="obstacle" ></a-entity>
+    <a-entity geometry="primitive: sphere; radius: 1" material="color: yellow; transparent: true; opacity: 1"  class="object" ></a-entity>
+    <a-entity geometry="primitive: box; depth: 0.43 ;width: 0.43; height:1.35" material="color: cyan; transparent: true; opacity: 1"  class="water" ></a-entity>
+
+
+        <a-camera id=camera rotation-reader fov="80"  raycaster="objects: .obstacle"  ></a-camera>
+        <img src="./cross.png"style="width:25% ; height:15% ; position:fixed; left: 150px; top: 280px;display: block; z-index: 9999;"/>
+    </a-scene>
+
+    <script>
+        const camera = document.querySelector('a-camera');
+        camera.addEventListener('raycaster-intersection',(event)=>{
+            const intersection = event.detail.els;
+            let object = document.querySelector('a-entity.object');
+            if(intersection.length>0){
+                console.log('   Obstacle detect!');
+                document.getElementById('hint').innerHTML="Obstacle detect!";
+                object.setAttribute('material','color: red');
+                console.log(object);
+            }
+            else{
+                object.setAttribute('material','color: cyan');
+                console.log('No obstacle detect!');
+            }
+        })
+    </script>
+
+    <script type="module">
+		import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.3.0/latlon-ellipsoidal-vincenty.js'; //匯入橢球距離的計算工具程式
+		
+		//---全域變數---
+		//API網址 (80 port: ngrok http 80)
+		function Run(){	const TrackAPI = "https://7dcf-140-116-47-115.ngrok-free.app/TrackAPI.php";
+
+            var position;
+            
+            //AR內容位置
+            let obstaclePosition = [{"x":120.220134305 ,"y":22.9987447203,"z":26.334}];
+            let objectPosition = [{"x":120.220096934619 ,"y":22.9988166855367,"z":26.728}];
+            let waterPosition = [{"x": 120.21999861420258,"y": 22.998736469127973,"z": 26.334}];
+
+            
+            //---主要功能: 取得姿態、位置等參數控制AR內容渲染狀況---
+            //watch position for indoor (每一秒呼叫一次後端API，從GIPS server獲取最新一筆定位軌跡，存入物件position)
+            jQuery(document).ready(function(){
+                window.addEventListener('deviceorientation', function(event) { //get azimuth
+                    //處理方位角
+                    let head = event.webkitCompassHeading; //獲取羅盤資料(iOS限定) //手機-z軸向(朝前)相對於N軸向之順時針角度
+                    if (head == undefined){ head = 0; } //無羅盤資料則預設朝向正北
+                    let theta = -(head-180-90); //N軸轉向手機x軸向(朝右)的逆時針角度
+                    let theta_rad = theta * Math.PI /180; //換成弧度
+
+                    $.getJSON( TrackAPI, function (data){
+                        let userHeight = data.z + 26.728;
+                        position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                        //SetLocation("text", theta_rad, position, objectPosition, "object");
+                        SetLocation("entity", theta_rad, position, obstaclePosition, "obstacle"); 
+                        SetLocation("entity", theta_rad, position, objectPosition, "object");  
+                        SetLocation("entity", theta_rad, position, waterPosition, "water"); 
+                    });
+
+                    setInterval(function() { //定時讀取軌跡中下一筆資料，並且重設模型位置
+                        $.getJSON( TrackAPI, function(data){
+                            let userHeight = data.z + 26.728;
+                            position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                            //SetLocation("text", theta_rad, position, objectPosition, "object");
+                            SetLocation("entity", theta_rad, position, obstaclePosition, "obstacle"); 
+                            SetLocation("entity", theta_rad, position, objectPosition, "object"); 
+                            SetLocation("entity", theta_rad, position, waterPosition, "water"); 
+                        });
+                    }, 1000);
+
+                }, {once: true}); //取得網頁就緒當下之方位角，且不隨每次的位置更新重複執行
+            });
+                    
+            //設定各模型相對於所在即時位置的高及位置
+            function SetLocation(type, degree, position, ancpos, classtype){ //type: 實體類型, degree: 啟動時裝置方位角, position: 用戶位置座標, ancpos: AR內容座標
+                let target = document.querySelectorAll('a-'+type+'.'+classtype);
+                if (target.length!=0 && ancpos.length!=0){
+                    for(let j=0; j<ancpos.length; j++){ 
+                        let H = ancpos[j].z - position.coords.altitude;
+                        let user = new LatLon(position.coords.latitude, position.coords.longitude);
+                        let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+                        let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+                        if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+                        if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+                        if (type=="text"){
+                        	target[j].setAttribute("look-at", {x: 0, y: 0, z: 0});
+                        	H = ancpos[j].z + 0.5 - position.coords.altitude;
+                        }
+                        let z = Math.cos(degree)*E + Math.sin(degree)*N;
+                        let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)
+        
+                        let target_att = document.createAttribute('position');
+                        target_att.value = x+" "+H+" "+z;
+                        target[j].setAttributeNode(target_att);
+                        
+                    }
+                }
+            };
+    	};
+   		Run();
+
+	</script>
+
+</body>
+</html>

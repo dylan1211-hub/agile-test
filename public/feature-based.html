@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Feature-based</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+	<script src="https://unpkg.com/aframe-render-order-component@1.1.0/dist/aframe-render-order-component.min.js"></script>
+    <link rel="stylesheet" href="./feature-based.css">
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+
+
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" value="geomatics" tabindex="0" checked>
+        <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+
+	<a-scene
+	cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 1500;"
+    raycaster="objects: .computer_room"
+    id = "scene"
+	vr-mode-ui="enabled: false"
+	embedded
+	arjs="sourceType: webcam; debugUIEnabled: false;"
+	>
+
+
+        <!--UWB基站-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.128 ;width: 0.134; height:0.037" scale="0.8 0.8 0.8" 
+        material="color:#984B4B ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="GIPS UWB base station" idn="10047" status="online" department="Geomatics" room="computer room" year="2023" ></a-entity>
+        <a-text class="computer_room" value="UWB station" scale="1 1 1" align="center"></a-text>
+        
+        <!--UWB基站機房內-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.128 ;width: 0.134; height:0.037" scale="0.6 0.6 0.6" 
+        material="color:#984B4B ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="GIPS UWB base station" idn="1003F" status="online" department="Geomatics" room="machine room" year="2023" ></a-entity>
+        <a-text class="computer_room" value="UWB station" scale="1 1 1" align="center"></a-text>
+        
+        <!--投影機左-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.291 ;width: 0.377; height:0.125" scale="0.6 0.6 0.6" 
+        material="color:#B766AD ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="EPSON projector" idn="P2" status="turn-off" department="Geomatics" room="computer room" year="2021" ></a-entity>
+        <a-text class="computer_room" value="Projector 2" scale="1 1 1" align="center"></a-text>
+        
+        <!--投影機右-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.291 ;width: 0.377; height:0.125" scale="0.6 0.6 0.6" 
+        material="color:#B766AD ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="EPSON projector" idn="P3" status="turn-off" department="Geomatics" room="computer room" year="2021" ></a-entity>
+        <a-text class="computer_room" value="Projector 3" scale="1 1 1" align="center"></a-text>
+       
+        <!--投影機中-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.291 ;width: 0.377; height:0.125" scale="0.6 0.6 0.6" 
+        material="color:#8080C0 ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="EPSON projector" idn="P1" status="turn-on" department="Geomatics" room="computer room" year="2021" ></a-entity>
+        <a-text class="computer_room" value="Projector 1" scale="1 1 1" align="center"></a-text>
+        
+        <!--白板-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.10 ;width: 4.8; height:1.18" scale="0.7 0.7 0.7" 
+        material="color:#EA7500 ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="Whiteboard" idn="W1" status="good" department="Geomatics" room="computer room" year="2019" ></a-entity>
+        <a-text class="computer_room" value="Whiteboard" scale="1 1 1" align="center"></a-text>
+       
+        <!--冷氣開關-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.08 ;width: 0.35; height:0.35" scale="1 1 1" 
+        material="color:#019858 ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="Air conditioner switch" idn="A1" status="turn-off" department="Geomatics" room="computer room" year="2006" ></a-entity>
+        <a-text class="computer_room" value="Power switch" scale="1 1 1" align="center"></a-text>
+        
+        <!--電腦-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.04 ;width: 0.56; height:0.39" scale="0.65 0.65 0.65" 
+        material="color:#00CACA ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="Acer computer" idn="C006" status="Power on" department="Geomatics" room="computer room" year="2018" ></a-entity>
+        <a-text class="computer_room" value="Computer" scale="1 1 1" align="center"></a-text>
+       
+        <!--桌子-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.71 ;width: 2.11; height:0.73" scale="0.75 0.75 0.75" 
+        material="color:#C6A300; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="Computer desk" idn="AD1" status="good" department="Geomatics" room="computer room" year="2006"></a-entity>
+        <a-text class="computer_room" value="Desk" scale="1 1 1" align="center"></a-text>
+       
+        <!--門-->
+        <a-entity class="computer_room" geometry="primitive: box; depth: 0.05 ;width: 0.08; height:2.14" scale="0.6 0.6 0.6" 
+        material="color:#FF8040 ; transparent: true; opacity: 0.5" rotation="0 90 0"  id="object" name="Door" idn="CD1" status="good" department="Geomatics" room="computer room" year="2003" ></a-entity> 
+        <a-text class="computer_room" value="Door" scale="1 1 1" align="center"></a-text>
+
+		<a-camera id =camera rotation-reader fov="80" ></a-camera>
+	</a-scene>
+	
+
+	<script type="module">
+		import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.3.0/latlon-ellipsoidal-vincenty.js'; //匯入橢球距離的計算工具程式
+        	//用法: const d = new LatLon(22.9987062, 120.2199947).distanceTo(new LatLon(23.9987062, 120.2199947));
+		
+		//---全域變數---
+		//API網址 (80 port: ngrok http 80)
+		function Run(){	const TrackAPI = "https://d0e4-140-116-47-115.ngrok-free.app/TrackAPI.php";
+
+		var position;
+		
+		//AR內容位置
+		let objectPosition = [{"x":120.2202005,"y":22.9988084,"z":2.8},  //uwb
+        {"x":120.2200696,"y":22.9988001,"z":2.8}, //uwb
+        {"x":120.2201138,"y":22.9988068,"z":2.05}, //projector
+        {"x":120.2201098,"y":22.9987578,"z":2.55}, //projector
+        {"x":120.2201584,"y":22.9987786,"z":2.05}, //projector
+        {"x":120.2201996,"y":22.9987727,"z":1.25}, //whiteboard
+        {"x":120.2201993,"y":22.9987562,"z":1.45},//switch
+         {"x":120.2201437,"y":22.9987877,"z":0.942},//computer
+        {"x":120.2201440,"y":22.9987904,"z":0.480},//desk
+        {"x":120.2200666,"y":22.9987492,"z":0.258},];//door
+
+		
+	    //---主要功能: 取得姿態、位置等參數控制AR內容渲染狀況---
+		//watch position for indoor (每一秒呼叫一次後端API，從GIPS server獲取最新一筆定位軌跡，存入物件position)
+		jQuery(document).ready(function(){
+
+			window.addEventListener('deviceorientation', function(event) { //get azimuth
+				//處理方位角
+				let head = event.webkitCompassHeading; //獲取羅盤資料(iOS限定) //手機-z軸向(朝前)相對於N軸向之順時針角度
+				if (head == undefined){ head = 0; } //無羅盤資料則預設朝向正北
+				let theta = -(head-180-90); //N軸轉向手機x軸向(朝右)的逆時針角度
+				let theta_rad = theta * Math.PI /180; //換成弧度
+				
+
+				$.getJSON( TrackAPI, function (data){
+					let userHeight = 0;
+				    position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+					SetLocation("entity", theta_rad, position, objectPosition, "computer_room");  
+                    SetLocation("text", theta_rad, position, objectPosition, "computer_room"); 
+
+				});
+
+				setInterval(function() { //定時讀取軌跡中下一筆資料，並且重設模型位置
+					$.getJSON( TrackAPI, function(data){
+						let userHeight = 0;
+					    position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+						SetLocation("entity", theta_rad, position, objectPosition, "computer_room"); 
+                        SetLocation("text", theta_rad, position, objectPosition, "computer_room"); 
+					});
+				}, 1000);
+
+			}, {once: true}); //取得網頁就緒當下之方位角，且不隨每次的位置更新重複執行
+		});
+				
+		//設定各模型相對於所在即時位置的高及位置
+		function SetLocation(type, degree, position, ancpos, classtype){ //type: 實體類型, degree: 啟動時裝置方位角, position: 用戶位置座標, ancpos: AR內容座標
+			let target = document.querySelectorAll('a-'+type+'.'+classtype);
+			if (target.length!=0 && ancpos.length!=0){
+				for(let j=0; j<ancpos.length; j++){ 
+					let H = ancpos[j].z - position.coords.altitude;
+					let user = new LatLon(position.coords.latitude, position.coords.longitude);
+					let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+					let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+					if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+					if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+					if (type=="text"){
+						target[j].setAttribute("look-at", {x: 0, y: 0, z: 0});
+						H = ancpos[j].z + 0.35 - position.coords.altitude;
+					}
+					let z = Math.cos(degree)*E + Math.sin(degree)*N;
+					let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)  
+
+					//z=1.5*z;
+					//x=1.5*x;
+					
+
+					let target_att = document.createAttribute('position');
+					target_att.value = x+" "+H+" "+z;
+					target[j].setAttributeNode(target_att);
+                    
+				}
+
+			}
+		};
+
+    	};
+   		Run();
+		ClickAttribute();
+        
+		function ClickAttribute(){
+			var clicked=false;
+			console.log("有執行ClickAttribute()");
+			let scene = document.getElementById('scene');
+			let clickobject = document.querySelectorAll('a-entity.computer_room');
+
+			for (let i =0 ; i<10; i++){
+
+				const clickListener = function (ev){
+					if(!clicked){
+						clicked=true;
+						ev.stopPropagation();
+						ev.preventDefault();
+
+						const name =ev.target.getAttribute('name');
+						const id =ev.target.getAttribute('idn');
+						const status =ev.target.getAttribute('status');
+						const department =ev.target.getAttribute('department');
+						const room =ev.target.getAttribute('room');
+						const year =ev.target.getAttribute('year');
+
+						const el = ev.detail.intersection && ev.detail.intersection.object.el;
+						if (el && el === ev.target) {
+							
+							let color = clickobject[i].getAttribute('material').color;
+							clickobject[i].setAttribute('material','color: white');
+							const label = document.createElement('span');
+							const container = document.createElement('div');
+							container.setAttribute('id', 'place-label');
+							label.innerHTML = "Item : " + name + "<br/>" + "Item ID : " + id + "<br/>" + "Status : " + status +  "<br/>" + "Department : " + department 
+							+ "<br/>" + "Space : " + room + "<br/>" + "Year : " + year ;
+							container.appendChild(label);
+							document.body.appendChild(container);
+							
+							setTimeout(() => {
+								container.parentElement.removeChild(container);
+								
+								console.log(color);
+								clickobject[i].setAttribute('material','color:'+color);
+								clicked=false;
+							}, 3000);
+						}
+					}
+					
+				};
+
+				clickobject[i].addEventListener('click',clickListener);
+			}
+		}
+
+
+	</script>
+</body>
+</html>
+

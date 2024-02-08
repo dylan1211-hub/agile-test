@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Indoor Navigation</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+	<script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+    <link rel="stylesheet" href="./Indoor_navigation.css">
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" value="geomatics" tabindex="0" checked>
+        <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+
+    <div class="onoffswitch2">
+        <input type="checkbox" name="onoffswitch2" class="onoffswitch2-checkbox" id="myonoffswitch2" value="geomatics" tabindex="0" checked>
+        <label class="onoffswitch2-label" for="myonoffswitch2">
+            <span class="onoffswitch2-inner"></span>
+            <span class="onoffswitch2-switch"></span>
+        </label>
+    </div>
+
+    <!--<input type="checkbox" name="" id="sideMenu-active" >
+
+		<div  id="map" class="sideMenu">
+			<iframe id="mapFrame" name="mapFrame"  src="https://d5e2-140-116-47-123.ngrok-free.app/rtls/app/zh-tw/map?enablePanel=false">
+			<script>
+			// Only for local development
+			headers['ngrok-skip-browser-warning'] = 'skip-browser-warning';
+			</script>
+			</iframe>
+			<label for="sideMenu-active" id="label" class="label">
+				<p class="fas">◀</p>
+			</label>
+			<div>
+				<button type="button" onclick="locateItemFunc()" id="locate">
+					<img id ="lb" src="https://dylan1211-hub.github.io/UWB-test/assets/position.png" border="0"/>
+				</button>
+			</div>
+		</div>
+		
+	
+	<script> //接室內地圖
+		var mapWindow = document.getElementById('mapFrame').contentWindow;
+	  
+		let configureAuthToken = function () {
+			mapWindow.postMessage({type: 'request', cmd: 'configure', data: {key: "authentication", value: {apiKey: "prod0159f50204644026939caac9876724a3", appId: "ncku_geo"}}}, '*');
+		}
+		
+		function locateItemFunc() {
+			mapWindow.postMessage({type: 'request', cmd: 'locateItem', data: {itemUid: "F2E5", setCenter: true, setCurrent: false}}, '*');
+		}
+	  
+		function receivedMessageFromChannel(e) {
+			if (e.source === e.target) { 
+				console.warn("Message ignored (e.source == e.target):", e);
+				return;
+			}
+	  
+			const msg = e.data;
+			let srcWindow = e.source;
+			if (msg.type === 'info') {
+				
+			 switch (msg.cmd) {
+				case 'ready':
+				configureAuthToken();
+				break;
+				default:
+				break;
+				}
+			} 
+		}
+	  
+		window.addEventListener("message", receivedMessageFromChannel);
+	  
+	</script>-->
+
+    <a-scene
+    cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 1500;"
+    raycaster="objects: .object;"
+    id = "scene"
+	vr-mode-ui="enabled: false"
+	embedded
+	arjs="sourceType: webcam; debugUIEnabled: false;"
+	>
+
+    <!--經緯廳-->
+    <a-entity id="object1" class="object" geometry="primitive: sphere; radius: 0.3" material="color: red; transparent: true; opacity: 1" animation-mixer 
+    name="經緯廳" number="4001" floor="1" description="education" accommodate="200" entry="2" identifier="RS084081_R01" status="Occupy"></a-entity>
+    <a-text class="object" value="Jin-Way Hall" scale="2 2 2" align="center"></a-text>
+
+    <!--系辦公室-->
+    <a-entity id="object1" class="object" geometry="primitive: sphere; radius: 0.3" material="color: #FFD306; transparent: true; opacity: 1" animation-mixer 
+    name="系辦公室" number="4001" floor="1" description="office" accommodate="10" entry="1" identifier="RS084081_R03" status="At work"></a-entity>
+    <a-text class="object" value="Office" scale="2 2 2" align="center"></a-text>
+
+    <!--一樓廁所-->
+    <a-entity id="object1" class="object" geometry="primitive: sphere; radius: 0.3" material="color: green; transparent: true; opacity: 1" animation-mixer 
+    name="一樓廁所" number="2" floor="1" description="toilet" accommodate="5" entry="1" identifier="RS084081_R02" status="Available"></a-entity>
+    <a-text class="object" value="Toilet-1F" scale="2 2 2" align="center"></a-text>
+
+    <!--電腦教室-->
+    <a-entity id="object2" class="object" geometry="primitive: sphere; radius: 0.3" material="color: red; transparent: true; opacity: 1" animation-mixer 
+    name="電腦教室" number="55208" floor="2" description="education" accommodate="60" entry="1" identifier="RS084081_R07" status="Occupy"></a-entity>
+    <a-text class="object" value="55208" scale="2 2 2" align="center"></a-text>
+
+    <!--大一教室-->
+    <a-entity id="object2" class="object" geometry="primitive: sphere; radius: 0.3" material="color: green; transparent: true; opacity: 1" animation-mixer 
+    name="大一教室" number="55250" floor="2" description="education" accommodate="60" entry="2" identifier="RS084081_R10" status="Available"></a-entity>
+    <a-text class="object" value="55250" scale="2 2 2" align="center"></a-text>
+
+    <!--圖書室-->
+    <a-entity id="object2" class="object" geometry="primitive: sphere; radius: 0.3" material="color: green; transparent: true; opacity: 1" animation-mixer 
+    name="圖書室" number="55209" floor="2" description="meeting" accommodate="15" entry="1" identifier="RS084081_R11" status="Available"></a-entity>
+    <a-text class="object" value="55209" scale="2 2 2" align="center"></a-text>
+
+    <!--實驗室-->
+    <a-entity id="object2" class="object" geometry="primitive: sphere; radius: 0.3" material="color: green; transparent: true; opacity: 1" animation-mixer 
+    name="實驗室" number="55210" floor="2" description="laboratory" accommodate="15" entry="1" identifier="RS084081_R08" status="Available"></a-entity>
+    <a-text class="object" value="55210" scale="2 2 2" align="center"></a-text>
+
+    <!--二樓廁所-->
+    <a-entity id="object2" class="object" geometry="primitive: sphere; radius: 0.3" material="color: green; transparent: true; opacity: 1" animation-mixer 
+    name="二樓廁所" number="5" floor="2" description="toilet" accommodate="5" entry="1" identifier="RS084081_R04" status="Available"></a-entity>
+    <a-text class="object" value="Toilet-2F" scale="2 2 2" align="center"></a-text>
+
+    
+
+    <a-camera id =camera rotation-reader fov="80"></a-camera>
+	</a-scene>
+
+    <script type="module">
+        import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.3.0/latlon-ellipsoidal-vincenty.js'; //匯入橢球距離的計算工具程式
+        
+        //---全域變數---
+        //API網址 (80 port: ngrok http 80)
+        var theta_rad;
+        function Run(){	const TrackAPI = "https://dec4-140-116-47-115.ngrok-free.app/TrackAPI.php";
+
+            var position;
+            //AR內容位置
+            let objectPosition = [{"x":120.2200520,"y":22.9987154,"z":15.334},
+                                {"x":120.219899488484,"y":22.9986588544236,"z":15.334},
+                                {"x":120.220028391573,"y":22.9987838422535,"z":15.334},
+                                {"x":120.2200666,"y":22.9987492,"z":27.334},
+                                {"x":120.2200649,"y":22.9987299,"z":27.334},
+                                {"x":120.2202121,"y":22.9987189,"z":27.334},
+                                {"x":120.2202138,"y":22.9987382,"z":27.334},
+                                {"x":120.220028391573,"y":22.998736469127973,"z":27.334}];
+
+            //---主要功能: 取得姿態、位置等參數控制AR內容渲染狀況---
+            //watch position for indoor (每一秒呼叫一次後端API，從GIPS server獲取最新一筆定位軌跡，存入物件position)
+            jQuery(document).ready(function(){
+                window.addEventListener('deviceorientation', function(event) { //get azimuth
+                    //處理方位角
+                    let head = event.webkitCompassHeading; //獲取羅盤資料(iOS限定) //手機-z軸向(朝前)相對於N軸向之順時針角度
+                    if (head == undefined){ head = 0; } //無羅盤資料則預設朝向正北
+                    let theta = -(head-180-90); //N軸轉向手機x軸向(朝右)的逆時針角度
+                    theta_rad = theta * Math.PI /180; //換成弧度
+
+
+                    $.getJSON( TrackAPI, function (data){
+                        let userHeight = data.z + 14.728;
+                        position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                        SetLocation("entity", theta_rad, position, objectPosition, "object"); 
+                        SetLocation("text", theta_rad, position, objectPosition, "object"); 
+                        
+                    });
+
+                    setInterval(function() { //定時讀取軌跡中下一筆資料，並且重設模型位置
+                        $.getJSON( TrackAPI, function(data){
+                            let userHeight = data.z + 14.728;
+                            position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                            SetLocation("entity", theta_rad, position, objectPosition, "object"); 
+                            SetLocation("text", theta_rad, position, objectPosition, "object");
+                        });
+                    }, 1000);
+                }, {once: true}); //取得網頁就緒當下之方位角，且不隨每次的位置更新重複執行
+            });
+            GetSwitch1();
+            GetSwitch2();
+    
+            //設定各模型相對於所在即時位置的高及位置
+            function SetLocation(type, degree, position, ancpos, classtype){ //type: 實體類型, degree: 啟動時裝置方位角, position: 用戶位置座標, ancpos: AR內容座標
+                let target = document.querySelectorAll('a-'+type+'.'+classtype);
+                if (target.length!=0 && ancpos.length!=0){
+                    for(let j=0; j<ancpos.length; j++){ 
+                        let H = ancpos[j].z - position.coords.altitude;
+                        let user = new LatLon(position.coords.latitude, position.coords.longitude);
+                        let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+                        let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+                        if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+                        if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+                        if (type=="text"){
+                            target[j].setAttribute("look-at", {x: 0, y: 0, z: 0});
+                            H = ancpos[j].z + 0.5 - position.coords.altitude;
+					    }
+                        let z = Math.cos(degree)*E + Math.sin(degree)*N;
+                        let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)
+   
+
+                        let target_att = document.createAttribute('position');
+                        target_att.value = x+" "+H+" "+z;
+                        target[j].setAttributeNode(target_att);
+                        //console.log(target_att.value);
+                        
+                    }
+                }
+            };
+
+    	};
+   		Run();
+        ClickAttribute()
+
+        function Route(){
+            const TrackAPI = "https://dec4-140-116-47-115.ngrok-free.app/TrackAPI.php";
+                var position;
+                let scene = document.getElementById('scene');
+
+                let L1 = document.createElement('a-entity');
+                L1.setAttribute('gltf-model','./arrow.gltf');
+                L1.setAttribute('scale','0.1 0.1 0.1');
+                L1.setAttribute('rotation','0 25 0');
+                L1.setAttribute('animation-mixer');
+                L1.setAttribute('class','arrow');
+                scene.appendChild(L1);
+            
+                let T1 = document.createElement('a-text');
+                T1.setAttribute('class','arrow');
+                T1.setAttribute('value','往樓梯方向');
+                T1.setAttribute('scale','2 2 2');
+                T1.setAttribute('align','center');
+                scene.appendChild(T1);
+
+                let L9 = document.createElement('a-entity');
+                L9.setAttribute('gltf-model','./arrow.gltf');
+                L9.setAttribute('scale','0.1 0.1 0.1');
+                L9.setAttribute('rotation','0 -30 -28');
+                L9.setAttribute('animation-mixer');
+                L9.setAttribute('class','arrow');
+                scene.appendChild(L9);
+            
+                let T9 = document.createElement('a-text');
+                T9.setAttribute('class','arrow');
+                T9.setAttribute('value','請上樓梯');
+                T9.setAttribute('scale','2 2 2');
+                T9.setAttribute('align','center');
+                scene.appendChild(T9);
+
+                let L10 = document.createElement('a-entity');
+                L10.setAttribute('gltf-model','./arrow.gltf');
+                L10.setAttribute('scale','0.1 0.1 0.1');
+                L10.setAttribute('rotation','0 210 -28');
+                L10.setAttribute('animation-mixer');
+                L10.setAttribute('class','arrow');
+                scene.appendChild(L10);
+            
+                let T10 = document.createElement('a-text');
+                T10.setAttribute('class','arrow');
+                T10.setAttribute('value','請上樓梯');
+                T10.setAttribute('scale','2 2 2');
+                T10.setAttribute('align','center');
+                scene.appendChild(T10);
+
+                let L11 = document.createElement('a-entity');
+                L11.setAttribute('gltf-model','./arrow.gltf');
+                L11.setAttribute('scale','0.1 0.1 0.1');
+                L11.setAttribute('rotation','0 330 0');
+                L11.setAttribute('animation-mixer');
+                L11.setAttribute('class','arrow');
+                scene.appendChild(L11);
+            
+                let T11 = document.createElement('a-text');
+                T11.setAttribute('class','arrow');
+                T11.setAttribute('value','向左轉');
+                T11.setAttribute('scale','2 2 2');
+                T11.setAttribute('align','center');
+                scene.appendChild(T11);
+
+
+                let L13 = document.createElement('a-entity');
+                L13.setAttribute('gltf-model','./arrow.gltf');
+                L13.setAttribute('scale','0.1 0.1 0.1');
+                L13.setAttribute('rotation','0 240 0');
+                L13.setAttribute('animation-mixer');
+                L13.setAttribute('class','arrow');
+                scene.appendChild(L13);
+            
+                let T13 = document.createElement('a-text');
+                T13.setAttribute('class','arrow');
+                T13.setAttribute('value','');
+                T13.setAttribute('scale','2 2 2');
+                T13.setAttribute('align','center');
+                scene.appendChild(T13);
+
+                let L15 = document.createElement('a-entity');
+                L15.setAttribute('gltf-model','./arrow.gltf');
+                L15.setAttribute('scale','0.1 0.1 0.1');
+                L15.setAttribute('rotation','0 150 0');
+                L15.setAttribute('animation-mixer');
+                L15.setAttribute('class','arrow');
+                scene.appendChild(L15);
+            
+                let T15 = document.createElement('a-text');
+                T15.setAttribute('class','arrow');
+                T15.setAttribute('value','向右轉');
+                T15.setAttribute('scale','2 2 2');
+                T15.setAttribute('align','center');
+                scene.appendChild(T15);
+
+                let arrowPosition=[{"x":120.219925622766,"y":22.9986691059228,"z":15.334},
+                {"x":120.219922268756,"y":22.9987025528891,"z":15.934},
+                {"x":120.219960280866,"y":22.9987149025361,"z":17.334},
+                {"x":120.220017858033,"y":22.9987308541619,"z":23.334},
+                {"x":120.22003742309,"y":22.9987473203542,"z":23.334},
+                {"x":120.220060342156,"y":22.9987406309638,"z":23.334}]
+
+                jQuery(document).ready(function(){
+
+
+                        $.getJSON( TrackAPI, function (data){
+                            let userHeight = data.z + 14.728;
+                            position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                            SetRoute("entity", theta_rad, position, arrowPosition, "arrow"); 
+                            SetRoute("text", theta_rad, position, arrowPosition, "arrow"); 
+                            
+                        });
+
+                        setInterval(function() { //定時讀取軌跡中下一筆資料，並且重設模型位置
+                            $.getJSON( TrackAPI, function(data){
+                                let userHeight = data.z + 14.728;
+                                position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                                SetRoute("entity", theta_rad, position, arrowPosition, "arrow"); 
+                                SetRoute("text", theta_rad, position, arrowPosition, "arrow");
+                            });
+                        }, 1000);
+                });
+    
+                //設定各模型相對於所在即時位置的高及位置
+                function SetRoute(type, degree, position, ancpos, classtype){ //type: 實體類型, degree: 啟動時裝置方位角, position: 用戶位置座標, ancpos: AR內容座標
+                    let target = document.querySelectorAll('a-'+type+'.'+classtype);
+                    if (target.length!=0 && ancpos.length!=0){
+                        for(let j=0; j<ancpos.length; j++){ 
+                            let H = ancpos[j].z - position.coords.altitude;
+                            let user = new LatLon(position.coords.latitude, position.coords.longitude);
+                            let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+                            let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+                            if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+                            if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+                            if (type=="text"){
+                                target[j].setAttribute("look-at", {x: 0, y: 0, z: 0});
+                                H = ancpos[j].z + 0.5 - position.coords.altitude;
+                            }
+                            let z = Math.cos(degree)*E + Math.sin(degree)*N;
+                            let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)
+    
+
+                            let target_att = document.createAttribute('position');
+                            target_att.value = x+" "+H+" "+z;
+                            target[j].setAttributeNode(target_att);
+                            
+                        }
+                    }
+                };
+        }
+
+        
+
+        function ClickAttribute(){
+            var clicked=false;
+            console.log("有執行ClickAttribute()");
+            let scene = document.getElementById('scene');
+            let clickobject = document.querySelectorAll('a-entity.object');
+           
+            for (let i =0 ; i<8; i++){
+
+            
+                const clickListener = function (ev){
+                    if(!clicked){
+                        clicked=true;
+                        ev.stopPropagation();
+                        ev.preventDefault();
+
+                        const name =ev.target.getAttribute('name');
+                        const number =ev.target.getAttribute('number');
+                        const floor =ev.target.getAttribute('floor');
+                        const description =ev.target.getAttribute('description');
+                        const accommodate =ev.target.getAttribute('accommodate');
+                        const entry =ev.target.getAttribute('entry');
+                        const identifier =ev.target.getAttribute('identifier');
+                        const status = ev.target.getAttribute('status');
+
+
+                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
+                        if (el && el === ev.target) {
+                            
+                            let color = clickobject[i].getAttribute('material').color;
+                            clickobject[i].setAttribute('material','color: cyan');
+                            const label = document.createElement('span');
+                            const container = document.createElement('div');
+                            container.setAttribute('id', 'place-label');
+                            label.innerHTML = "Room : " + name + "<br/>" + "Room Number : " + number + "<br/>" + "Floor : " + floor + "F"+ "<br/>" + "Description : " + description 
+                            + "<br/>" + "Accommodate : " + accommodate+ "<br/>" + "Entry : " + entry+ "<br/>" + "Identifier : " +identifier+ "<br/>" + "Status : " +status
+                            + "<br/>" +'<input value="Navigation" type="button" id="55250" style="width:120px;height:40px;font-size:20px;background-color:#8FE7FF;border-radius: 17px;color: #fdfdfd;border: 2px solid #999999">';
+                            container.appendChild(label);
+                            document.body.appendChild(container);
+
+                            const button = document.getElementById('55250');
+                            button.addEventListener('click', Route);
+                            
+            
+                            setTimeout(() => {
+                                container.parentElement.removeChild(container);
+                                
+                                console.log(color);
+                                clickobject[i].setAttribute('material','color:'+color);
+                                clicked=false;
+                            }, 3000);
+                        }
+                    }
+                    
+
+                };
+
+                clickobject[i].addEventListener('click',clickListener);
+            }
+            
+            
+        }
+
+        function GetSwitch1(){
+            let checkbox = document.querySelector("#myonoffswitch");
+            checkbox.addEventListener('change',function(){
+                let scene = document.getElementById('scene');
+                if(this.checked){
+                    
+                    let jin = document.createElement('a-entity');
+                    jin.setAttribute('id','object1');
+                    jin.setAttribute('class','object');
+                    jin.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    jin.setAttribute('material','color: red; transparent: true; opacity: 1');
+					jin.setAttribute('animation-mixer');
+                    jin.setAttribute('name','經緯廳');
+                    jin.setAttribute('number','4001');
+                    jin.setAttribute('floor','1');
+                    jin.setAttribute('description','education');
+                    jin.setAttribute('accommodate','200');
+                    jin.setAttribute('entry','2');
+                    jin.setAttribute('identifier','RS084081_R01');
+                    jin.setAttribute('status','Occupy');
+                    scene.appendChild(jin);
+
+                    let office = document.createElement('a-entity');
+                    office.setAttribute('id','object1');
+                    office.setAttribute('class','object');
+                    office.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    office.setAttribute('material','color: yellow; transparent: true; opacity: 1');
+					office.setAttribute('animation-mixer');
+                    office.setAttribute('name','系辦公室');
+                    office.setAttribute('number','4001');
+                    office.setAttribute('floor','1');
+                    office.setAttribute('description','office');
+                    office.setAttribute('accommodate','10');
+                    office.setAttribute('entry','1');
+                    office.setAttribute('identifier','RS084081_R03');
+                    office.setAttribute('status','At work');
+                    scene.appendChild(office);
+
+                    let t1 = document.createElement('a-entity');
+                    t1.setAttribute('id','object1');
+                    t1.setAttribute('class','object');
+                    t1.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    t1.setAttribute('material','color: green; transparent: true; opacity: 1');
+					t1.setAttribute('animation-mixer');
+                    t1.setAttribute('name','一樓廁所');
+                    t1.setAttribute('number','2');
+                    t1.setAttribute('floor','1');
+                    t1.setAttribute('description','toilet');
+                    t1.setAttribute('accommodate','5');
+                    t1.setAttribute('entry','1');
+                    t1.setAttribute('identifier','RS084081_R02');
+                    t1.setAttribute('status','Available');
+                    scene.appendChild(t1);
+                    Run();
+
+                    
+                }else{
+                    console.log("not display");	
+                    for(let i=0;i<3;i++){
+                    scene.removeChild(document.getElementById('object1'));
+                    }       
+                }
+            })
+        }
+
+        function GetSwitch2(){
+            let checkbox = document.querySelector("#myonoffswitch2");
+            checkbox.addEventListener('change',function(){
+                let scene = document.getElementById('scene');
+                if(this.checked){
+                    
+                    let com = document.createElement('a-entity');
+                    com.setAttribute('id','object2');
+                    com.setAttribute('class','object');
+                    com.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    com.setAttribute('material','color: green; transparent: true; opacity: 1');
+					com.setAttribute('animation-mixer');
+                    com.setAttribute('name','電腦教室');
+                    com.setAttribute('number','55208');
+                    com.setAttribute('floor','2');
+                    com.setAttribute('description','education');
+                    com.setAttribute('accommodate','60');
+                    com.setAttribute('entry','1');
+                    com.setAttribute('identifier','RS084081_R07');
+                    com.setAttribute('status','Occupy');
+                    scene.appendChild(com);
+
+                    let one = document.createElement('a-entity');
+                    one.setAttribute('id','object2');
+                    one.setAttribute('class','object');
+                    one.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    one.setAttribute('material','color: reg; transparent: true; opacity: 1');
+					one.setAttribute('animation-mixer');
+                    one.setAttribute('name','大一教室');
+                    one.setAttribute('number','55250');
+                    one.setAttribute('floor','2');
+                    one.setAttribute('description','education');
+                    one.setAttribute('accommodate','60');
+                    one.setAttribute('entry','2');
+                    one.setAttribute('identifier','RS084081_R10');
+                    one.setAttribute('status','Available');
+                    scene.appendChild(one);
+
+                    let lib = document.createElement('a-entity');
+                    lib.setAttribute('id','object2');
+                    lib.setAttribute('class','object');
+                    lib.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    lib.setAttribute('material','color: green; transparent: true; opacity: 1');
+					lib.setAttribute('animation-mixer');
+                    lib.setAttribute('name','圖書室');
+                    lib.setAttribute('number','55209');
+                    lib.setAttribute('floor','2');
+                    lib.setAttribute('description','meeting');
+                    lib.setAttribute('accommodate','15');
+                    lib.setAttribute('entry','1');
+                    lib.setAttribute('identifier','RS084081_R11');
+                    lib.setAttribute('status','Available');
+                    scene.appendChild(lib);
+
+                    let lab = document.createElement('a-entity');
+                    lab.setAttribute('id','object2');
+                    lab.setAttribute('class','object');
+                    lab.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    lab.setAttribute('material','color: green; transparent: true; opacity: 1');
+					lab.setAttribute('animation-mixer');
+                    lab.setAttribute('name','實驗室');
+                    lab.setAttribute('number','55210');
+                    lab.setAttribute('floor','2');
+                    lab.setAttribute('description','laboratory');
+                    lab.setAttribute('accommodate','15');
+                    lab.setAttribute('entry','1');
+                    lab.setAttribute('identifier','RS084081_R08');
+                    lab.setAttribute('status','Available');
+                    scene.appendChild(lab);
+
+                    let t2 = document.createElement('a-entity');
+                    t2.setAttribute('id','object2');
+                    t2.setAttribute('class','object');
+                    t2.setAttribute('geometry','primitive: sphere; radius: 0.1');
+                    t2.setAttribute('material','color: green; transparent: true; opacity: 1');
+					t2.setAttribute('animation-mixer');
+                    t2.setAttribute('name','二樓廁所');
+                    t2.setAttribute('number','5');
+                    t2.setAttribute('floor','2');
+                    t2.setAttribute('description','toilet');
+                    t2.setAttribute('accommodate','5');
+                    t2.setAttribute('entry','1');
+                    t2.setAttribute('identifier','RS084081_R04');
+                    t2.setAttribute('status','Available');
+                    scene.appendChild(t2);
+                    Run();
+
+                    
+                }else{
+                    console.log("not display");	
+                    for(let i=0;i<5;i++){
+                    scene.removeChild(document.getElementById('object2'));
+                    }       
+                }
+            })
+        }
+        
+
+    </script>
+</body>
+</html>

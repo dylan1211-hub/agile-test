@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Indoor Route Line Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script type='text/javascript'src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+
+
+
+
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+
+
+
+    <a-scene cursor="rayOrigin: mouse; fuse: true: fuseTimeout: 0;" raycaster="objects: .object;" id="scene"
+        vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false;">  
+
+        <!-- Create Node -->
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-0" ></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-1" ></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-2"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-3"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-4"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-5"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-6"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-7"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p1-8"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-1"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-2"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-3"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-4"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-5"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-6"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-7"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-8"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-9"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-10"></a-entity>
+        <a-entity class="node" geometry="primitive: sphere; radius:0.1" material="color:white ; transparent: true; opacity: 0.8" animation-mixer id="p2-11"></a-entity>
+    
+
+        <a-camera id=camera rotation-reader fov="80"  ></a-camera>
+    </a-scene>
+
+    <script type="module">
+		import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.3.0/latlon-ellipsoidal-vincenty.js'; //匯入橢球距離的計算工具程式
+        	//用法: const d = new LatLon(22.9987062, 120.2199947).distanceTo(new LatLon(23.9987062, 120.2199947));
+		
+		//---全域變數---
+		//API網址 (80 port: ngrok http 80)
+		function Run(){	const TrackAPI = "https://dec4-140-116-47-115.ngrok-free.app/TrackAPI.php";
+
+
+            var position;
+            
+            //AR內容位置
+
+            let objectPosition = [{"x":120.219958123362,"y":22.9986462818692,"z":15.334},  
+            {"x":120.219960481346,"y":22.9986744991055,"z":15.334},
+            {"x":120.219921967618,"y":22.9986755843837,"z":15.334},
+            {"x":120.219922753613,"y":22.9986900547589,"z":15.334},
+            {"x":120.219899959774,"y":22.9986806490152,"z":15.334},
+            {"x":120.220020609921,"y":22.9986752226243,"z":15.334},
+            {"x":120.220026111882,"y":22.998720804301,"z":15.334},
+            {"x":120.220050084712,"y":22.9987200807824,"z":15.334},
+            {"x":120.220028469865,"y":22.9987714505904,"z":15.934},
+            {"x":120.219923539607,"y":22.9987164631896,"z":17.334},
+            {"x":120.220022181909,"y":22.9987150161524,"z":23.334},
+            {"x":120.220022181909,"y":22.9986972899459,"z":23.334},
+            {"x":120.220024539893,"y":22.9987464892073,"z":23.334},
+            {"x":120.220033578829,"y":22.9987718123495,"z":23.334},
+            {"x":120.220068162584,"y":22.9987461274481,"z":23.334},
+            {"x":120.220070113754,"y":22.9987342261348,"z":23.334},
+            {"x":120.220073650729,"y":22.9987573787242,"z":23.334},
+            {"x":120.220196634297,"y":22.9987426073613,"z":23.334},
+            {"x":120.220204494242,"y":22.9987306693065,"z":23.334},
+            {"x":120.220203708247,"y":22.9987538218966,"z":23.334}];
+
+
+            
+            //---主要功能: 取得姿態、位置等參數控制AR內容渲染狀況---
+            jQuery(document).ready(function(){
+              
+                window.addEventListener('deviceorientation', function(event) { //get azimuth
+                    //處理方位角
+                    let head = event.webkitCompassHeading; //獲取羅盤資料(iOS限定) //手機-z軸向(朝前)相對於N軸向之順時針角度
+                    if (head == undefined){ head = 0; } //無羅盤資料則預設朝向正北
+                    let theta = -(head-180-90); //N軸轉向手機x軸向(朝右)的逆時針角度
+                    let theta_rad = theta * Math.PI /180; //換成弧度
+                    
+
+                    $.getJSON( TrackAPI, function (data){
+                        let userHeight = data.z + 14.728;
+                        position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                        SetLocation("entity", theta_rad, position, objectPosition, "node");  
+                    });
+
+                    setInterval(function() { //定時讀取軌跡中下一筆資料，並且重設模型位置
+                        $.getJSON( TrackAPI, function(data){
+                            let userHeight = data.z + 14.728;
+                            position = {coords:{longitude: data.x, latitude: data.y, altitude: userHeight}}; //用戶即時位置座標
+                            SetLocation("entity", theta_rad, position, objectPosition, "node"); 
+                        });
+                    }, 1000);
+
+                }, {once: true}); //取得網頁就緒當下之方位角，且不隨每次的位置更新重複執行
+            });
+                    
+            //設定各模型相對於所在即時位置的高及位置
+            function SetLocation(type, degree, position, ancpos, classtype){ //type: 實體類型, degree: 啟動時裝置方位角, position: 用戶位置座標, ancpos: AR內容座標
+                let target = document.querySelectorAll('a-'+type+'.'+classtype);
+                if (target.length!=0 && ancpos.length!=0){
+                    for(let j=0; j<ancpos.length; j++){ 
+                        let H = ancpos[j].z - position.coords.altitude;
+                        let user = new LatLon(position.coords.latitude, position.coords.longitude);
+                        let E = new LatLon(position.coords.latitude, ancpos[j].x).distanceTo(user);
+                        let N = new LatLon(ancpos[j].y, position.coords.longitude).distanceTo(user);
+                        if (ancpos[j].x-position.coords.longitude < 0){ E = -E;}
+                        if (ancpos[j].y-position.coords.latitude < 0){ N = -N;}
+
+                        let z = Math.cos(degree)*E + Math.sin(degree)*N;
+                        let x = Math.cos(degree)*N - Math.sin(degree)*E; //換算至手機相機局部坐標系中(公尺)
+            
+
+                        let target_att = document.createAttribute('position');
+                        target_att.value = x+" "+H+" "+z;
+                        target[j].setAttributeNode(target_att);
+                        setRoute1();
+                        setRoute2();
+                        setRoute3();
+                        setRoute4();
+                        setRoute5();
+                        setRoute6();
+                        setRoute7();
+                        setRoute8();
+                        setRoute9();
+                        setRoute10();
+                        setRoute11();
+                        setRoute12();
+                        setRoute13();
+                        setRoute14();
+                        setRoute15();
+                        setRoute16();
+                        setRoute17();
+                        setRoute18();
+                        setRoute19();
+            
+                    }
+                }
+            };
+
+
+        };
+
+   		Run();
+        
+        function setRoute1(){
+            // Get references to the nodes by their IDs
+            var node1 = document.querySelector('#p1-0');
+            var node2 = document.querySelector('#p1-1');
+
+            // Create a line geometry based on the positions of the nodes
+            var lineGeometry = new THREE.BufferGeometry();
+            var positions = new Float32Array(6);
+
+            // Set the positions of the line vertices
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y;
+            positions[5] = node2.object3D.position.z;
+
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            // Create a line2 material with the desired linewidth
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+
+            // Create the line2 object
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+
+            // Add the line to the scene
+            node1.object3D.add(line);
+
+        }
+        function setRoute2(){
+            let node1 = document.querySelector('#p1-1');
+            let node2 = document.querySelector('#p1-2');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute3(){
+            let node1 = document.querySelector('#p1-2');
+            let node2 = document.querySelector('#p1-3');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute4(){
+            let node1 = document.querySelector('#p1-2');
+            let node2 = document.querySelector('#p1-4');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute5(){
+            let node1 = document.querySelector('#p1-1');
+            let node2 = document.querySelector('#p1-5');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute6(){
+            let node1 = document.querySelector('#p1-5');
+            let node2 = document.querySelector('#p1-6');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute7(){
+            let node1 = document.querySelector('#p1-6');
+            let node2 = document.querySelector('#p1-7');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute8(){
+            let node1 = document.querySelector('#p1-6');
+            let node2 = document.querySelector('#p1-8');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute9(){
+            let node1 = document.querySelector('#p1-3');
+            let node2 = document.querySelector('#p2-1');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute10(){
+            let node1 = document.querySelector('#p2-1');
+            let node2 = document.querySelector('#p2-2');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute11(){
+            let node1 = document.querySelector('#p2-2');
+            let node2 = document.querySelector('#p2-4');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute12(){
+            let node1 = document.querySelector('#p2-2');
+            let node2 = document.querySelector('#p2-3');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute13(){
+            let node1 = document.querySelector('#p2-4');
+            let node2 = document.querySelector('#p2-6');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute14(){
+            let node1 = document.querySelector('#p2-4');
+            let node2 = document.querySelector('#p2-5');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute15(){
+            let node1 = document.querySelector('#p2-6');
+            let node2 = document.querySelector('#p2-7');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute16(){
+            let node1 = document.querySelector('#p2-6');
+            let node2 = document.querySelector('#p2-8');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute17(){
+            let node1 = document.querySelector('#p2-6');
+            let node2 = document.querySelector('#p2-9');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute18(){
+            let node1 = document.querySelector('#p2-9');
+            let node2 = document.querySelector('#p2-10');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        function setRoute19(){
+            let node1 = document.querySelector('#p2-9');
+            let node2 = document.querySelector('#p2-11');
+            let lineGeometry = new THREE.BufferGeometry();
+            let positions = new Float32Array(6);
+            positions[0] = node1.object3D.position.x;
+            positions[1] = node1.object3D.position.y-1.5;
+            positions[2] = node1.object3D.position.z;
+
+            positions[3] = node2.object3D.position.x;
+            positions[4] = node2.object3D.position.y-1.5;
+            positions[5] = node2.object3D.position.z;    
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 5 });
+            var line = new THREE.Line(lineGeometry, lineMaterial);
+            node1.object3D.add(line);
+        }
+        
+	</script>
+</body>
+
+</html>
